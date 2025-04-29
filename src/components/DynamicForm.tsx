@@ -7,6 +7,10 @@ interface DynamicFormProps {
   rollNumber: string;
 }
 
+interface FormData {
+  [key: string]: string | string[] | boolean;
+}
+
 // Create a separate component for form fields to access form context
 function FormFields({ fields }: { fields: FormField[] }) {
   const { register, formState: { errors } } = useFormContext();
@@ -157,7 +161,7 @@ export default function DynamicForm({ rollNumber }: DynamicFormProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
 
-  const methods = useForm();
+  const methods = useForm<FormData>();
 
   useEffect(() => {
     const fetchForm = async () => {
@@ -165,7 +169,7 @@ export default function DynamicForm({ rollNumber }: DynamicFormProps) {
         const response = await getForm(rollNumber);
         setFormData(response.form.sections);
         setLoading(false);
-      } catch (err) {
+      } catch (error) {
         setError('Failed to load form. Please try again.');
         setLoading(false);
       }
@@ -194,7 +198,7 @@ export default function DynamicForm({ rollNumber }: DynamicFormProps) {
     }
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormData) => {
     console.log('Form Data:', data);
   };
 

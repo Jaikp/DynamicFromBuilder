@@ -24,7 +24,8 @@ export default function Login({ onLoginSuccess }: LoginProps) {
     try {
       await createUser(data);
       onLoginSuccess(data.rollNumber);
-    } catch (err) {
+    } catch (error) {
+      console.error('Login error:', error);
       setError('Failed to login. Please try again.');
     }
   };
