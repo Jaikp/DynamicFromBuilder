@@ -170,6 +170,7 @@ export default function DynamicForm({ rollNumber }: DynamicFormProps) {
         setFormData(response.form.sections);
         setLoading(false);
       } catch (error) {
+        console.error('Form fetch error:', error);
         setError('Failed to load form. Please try again.');
         setLoading(false);
       }
